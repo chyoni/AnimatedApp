@@ -17,3 +17,7 @@
 - #04 Animated 2
 
   - timing, spring
+
+- #05 Animated 3
+
+  - start callback fn, useRef, easing

@@ -29,3 +29,7 @@
 - #07 Animated 5
 
   - ValueXY, native driver's limit
+
+- #08 Animated 6
+
+  - loop, sequence

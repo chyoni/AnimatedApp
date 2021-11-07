@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 
 const Container = styled.View`
@@ -11,24 +12,21 @@ const Box = styled.TouchableOpacity`
   width: 200px;
   height: 200px;
 `;
+const AnimatedBox = Animated.createAnimatedComponent(Box);
 
 export default function App() {
-  const [y, setY] = useState(0);
-  const [intervalID, setIntervalID] = useState(null);
-  const moveUp = () => {
-    const id = setInterval(() => setY((prev) => prev + 10), 10);
-    setIntervalID(id);
-  };
-
-  useEffect(() => {
-    if (y === 200) {
-      clearInterval(intervalID);
-    }
-  }, [y, intervalID]);
-
+  // react-native의 Animated Value는 절대 react state로 만들지 않늗다.
+  // react-native의 Animated Value는 절대 직접 변경하지 않는다.
+  // react-native의 Animated 대상은 animatable한 것에만 가능하다 (Animated.Image, Animated.View, Animated.FlatList ...)
+  // animatable한 component를 만들려면 Animated.createAnimatedComponent()를 사용하면 된다.
+  const Y = new Animated.Value(0);
+  const moveUp = () => {};
   return (
     <Container>
-      <Box onPress={moveUp} style={{ transform: [{ translateY: y }] }} />
+      <AnimatedBox
+        onPress={moveUp}
+        style={{ transform: [{ translateY: Y }] }}
+      />
     </Container>
   );
 }

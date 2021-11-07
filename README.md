@@ -9,3 +9,7 @@
   ```
 
 - #02 Raw Implement for Animated
+
+- #03 Animated 1
+
+  - react-native의 내장된 library

@@ -21,3 +21,7 @@
 - #05 Animated 3
 
   - start callback fn, useRef, easing
+
+- #06 Animated 4
+
+  - interpolate

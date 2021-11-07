@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Easing, TouchableOpacity } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Pressable } from 'react-native';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -19,21 +19,34 @@ export default function App() {
   const [up, setUp] = useState(false);
   const toggleUp = () => setUp((prev) => !prev);
   // useRef는 value의 마지막 값을 기억하고 있다가 렌더링이 다시 되어도 그 값을 유지해주는 녀석
-  const Y = useRef(new Animated.Value(0)).current;
+  const Y = useRef(new Animated.Value(300)).current;
   const moveUp = () => {
     Animated.timing(Y, {
-      toValue: up ? 200 : -200,
+      toValue: up ? 300 : -300,
       useNativeDriver: true,
-      // easing은 특수효과 정도?
-      easing: Easing.ease,
-      // start()는 callback fn을 가지는데 이 callback은 animated가 끝나고 실행된다.
     }).start(toggleUp);
   };
+
+  // interpolate은 Animated의 Value가 어떤 값일 때 output값을 찍어내는 기술이다.
+  const opacity = Y.interpolate({
+    inputRange: [-300, 0, 300],
+    outputRange: [1, 0, 1],
+  });
+  const borderRadius = Y.interpolate({
+    inputRange: [-300, 300],
+    outputRange: [100, 0],
+  });
   return (
     <Container>
-      <TouchableOpacity onPress={moveUp}>
-        <AnimatedBox style={{ transform: [{ translateY: Y }] }} />
-      </TouchableOpacity>
+      <Pressable onPress={moveUp}>
+        <AnimatedBox
+          style={{
+            borderRadius,
+            opacity: opacity,
+            transform: [{ translateY: Y }],
+          }}
+        />
+      </Pressable>
     </Container>
   );
 }

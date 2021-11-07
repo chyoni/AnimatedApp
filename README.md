@@ -25,3 +25,7 @@
 - #06 Animated 4
 
   - interpolate
+
+- #07 Animated 5
+
+  - ValueXY, native driver's limit

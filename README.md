@@ -13,3 +13,7 @@
 - #03 Animated 1
 
   - react-native의 내장된 library
+
+- #04 Animated 2
+
+  - timing, spring

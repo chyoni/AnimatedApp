@@ -41,3 +41,7 @@
 - #10 PanRespoonder 2
 
   - onPanResponderRelease
+
+- #11 PanResponder 3
+
+  - offset (처음 위치 지정)

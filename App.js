@@ -29,7 +29,14 @@ export default function App() {
     PanResponder.create({
       // 얘를 true로 하면 사용자가 해당 view와 interact할 수 있게 해준다. 어떤 터치든 감지한다.
       onStartShouldSetPanResponder: () => true,
-      // 얘는 터치를 감지하고 터치의 위치를 찍어내는 함수
+      // 터치가 시작될 때 불리는 함수이고 이 함수에서 setOffset을 설정하면 마지막으로 찍혔던 x,y의 좌표를 초기값으로 지정해준다.
+      onPanResponderGrant: () => {
+        position.setOffset({
+          x: position.x._value,
+          y: position.y._value,
+        });
+      },
+      // 얘는 터치한 상태에서 움직일때 불리는 함수이고 터치한 지점부터 x, y로의 움직인 거리를 dx, dy로 받는다.
       onPanResponderMove: (_, { dx, dy }) => {
         position.setValue({
           x: dx,
@@ -38,14 +45,15 @@ export default function App() {
       },
       // 사용자가 터치를 놓는 순간을 의미
       onPanResponderRelease: () => {
-        Animated.spring(position, {
-          toValue: {
-            x: 0,
-            y: 0,
-          },
-          bounciness: 5,
-          useNativeDriver: false,
-        }).start();
+        // Animated.spring(position, {
+        //   toValue: {
+        //     x: 0,
+        //     y: 0,
+        //   },
+        //   bounciness: 5,
+        //   useNativeDriver: false,
+        // }).start();
+        position.flattenOffset();
       },
     })
   ).current;

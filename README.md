@@ -68,3 +68,5 @@
   - 얘네를 가지고 애니메이션이 끝나는 속도를 더 빠르게 할 수 있다.
 
 - #17 DragAndDrop PJ 1
+
+- #18 DragAndDrop PJ 2

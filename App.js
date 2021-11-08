@@ -3,6 +3,7 @@ import { Dimensions, Animated, PanResponder, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import icons from './icons';
+import { Easing } from 'react-native-reanimated';
 
 const BLACK_COLOR = '#1e272e';
 const GREY = '#485460';
@@ -35,6 +36,7 @@ const Center = styled.View`
   flex: 3;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 const IconCard = styled(Animated.createAnimatedComponent(View))`
   background-color: white;
@@ -47,6 +49,18 @@ const IconCard = styled(Animated.createAnimatedComponent(View))`
 export default function App() {
   const scale = useRef(new Animated.Value(1)).current;
   const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  const scaleOne = position.y.interpolate({
+    inputRange: [-300, -80],
+    outputRange: [2, 1],
+    extrapolate: 'clamp',
+  });
+  const scaleTwo = position.y.interpolate({
+    inputRange: [80, 300],
+    outputRange: [1, 2],
+    extrapolate: 'clamp',
+  });
 
   const onPressIn = Animated.spring(scale, {
     toValue: 0.9,
@@ -60,6 +74,18 @@ export default function App() {
     toValue: { x: 0, y: 0 },
     useNativeDriver: true,
   });
+  const onDropScale = Animated.timing(scale, {
+    toValue: 0,
+    duration: 100,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
+  const onDropOpacity = Animated.timing(opacity, {
+    toValue: 0,
+    duration: 100,
+    easing: Easing.linear,
+    useNativeDriver: true,
+  });
 
   const panResponder = useRef(
     PanResponder.create({
@@ -70,8 +96,20 @@ export default function App() {
       onPanResponderMove: (_, { dx, dy }) => {
         position.setValue({ x: dx, y: dy });
       },
-      onPanResponderRelease: () => {
-        Animated.parallel([goZero, onPressOut]).start();
+      onPanResponderRelease: (_, { dy }) => {
+        if (dy < -250 || dy > 250) {
+          Animated.sequence([
+            Animated.parallel([onDropScale, onDropOpacity]),
+            Animated.timing(position, {
+              toValue: 0,
+              duration: 100,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        } else {
+          Animated.parallel([goZero, onPressOut]).start();
+        }
       },
     })
   ).current;
@@ -79,7 +117,7 @@ export default function App() {
   return (
     <Container>
       <Edge>
-        <WordContainer>
+        <WordContainer style={{ transform: [{ scale: scaleOne }] }}>
           <Word color={GREEN}>알아</Word>
         </WordContainer>
       </Edge>
@@ -87,6 +125,7 @@ export default function App() {
         <IconCard
           {...panResponder.panHandlers}
           style={{
+            opacity,
             transform: [...position.getTranslateTransform(), { scale }],
           }}
         >
@@ -94,7 +133,7 @@ export default function App() {
         </IconCard>
       </Center>
       <Edge>
-        <WordContainer>
+        <WordContainer style={{ transform: [{ scale: scaleTwo }] }}>
           <Word color={RED}>몰라</Word>
         </WordContainer>
       </Edge>

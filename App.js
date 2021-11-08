@@ -57,11 +57,15 @@ export default function App() {
     toValue: -500,
     tension: 5,
     useNativeDriver: true,
+    restSpeedThreshold: 100,
+    restDisplacementThreshold: 100,
   });
   const disappearRight = Animated.spring(position, {
     toValue: 500,
     tension: 5,
     useNativeDriver: true,
+    restSpeedThreshold: 100,
+    restDisplacementThreshold: 100,
   });
   const onPressIn = Animated.spring(scale, {
     toValue: 0.8,

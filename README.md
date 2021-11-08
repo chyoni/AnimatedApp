@@ -61,3 +61,8 @@
 - #15 Card PJ 4
 
   - trick infinity card
+
+- #16 Card PJ 5
+
+  - restSpeedThreshold, restDisplacementThreshold
+  - 얘네를 가지고 애니메이션이 끝나는 속도를 더 빠르게 할 수 있다.

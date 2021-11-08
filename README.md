@@ -70,3 +70,5 @@
 - #17 DragAndDrop PJ 1
 
 - #18 DragAndDrop PJ 2
+
+- #19 Animation PJ DONE !

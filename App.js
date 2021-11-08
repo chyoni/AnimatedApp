@@ -36,6 +36,17 @@ export default function App() {
           y: dy,
         });
       },
+      // 사용자가 터치를 놓는 순간을 의미
+      onPanResponderRelease: () => {
+        Animated.spring(position, {
+          toValue: {
+            x: 0,
+            y: 0,
+          },
+          bounciness: 5,
+          useNativeDriver: false,
+        }).start();
+      },
     })
   ).current;
 

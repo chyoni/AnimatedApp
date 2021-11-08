@@ -37,3 +37,7 @@
 - #09 Drag and Drop Animation
 
   - PanResponder
+
+- #10 PanRespoonder 2
+
+  - onPanResponderRelease

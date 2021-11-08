@@ -49,3 +49,7 @@
 - #12 Card PJ
 
   - Animated.parallel
+
+- #13 Card PJ 2
+
+  - interpolate card disappear

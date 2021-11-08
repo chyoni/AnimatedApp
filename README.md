@@ -57,3 +57,7 @@
 - #14 Card PJ 3
 
   - multiple card
+
+- #15 Card PJ 4
+
+  - trick infinity card

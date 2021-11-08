@@ -45,3 +45,7 @@
 - #11 PanResponder 3
 
   - offset (처음 위치 지정)
+
+- #12 Card PJ
+
+  - Animated.parallel
